@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RepoLens.API/RepoLens.API.csproj" />
+    <Project Path="src/RepoLens.Application/RepoLens.Application.csproj" />
+    <Project Path="src/RepoLens.Domain/RepoLens.Domain.csproj" />
+    <Project Path="src/RepoLens.Infrastructure/RepoLens.Infrastructure.csproj" />
+  </Folder>
+</Solution>

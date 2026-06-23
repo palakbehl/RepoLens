@@ -1,0 +1,48 @@
+services:
+
+  postgres:
+    image: postgres:17
+
+    container_name: repolens-postgres
+
+    environment:
+      POSTGRES_DB: RepoLensDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: repolens123
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: src/RepoLens.API/Dockerfile
+
+    container_name: repolens-api
+
+    depends_on:
+      - postgres
+
+    ports:
+      - "5086:8080"
+
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=RepoLensDb;Username=postgres;Password=repolens123
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: repolens-frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
