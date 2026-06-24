@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiService } from '../services/api';
+import { API_BASE_URL, apiService } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
 
@@ -47,7 +47,10 @@ export const AddRepository = () => {
       setGitHubUrl('');
     } catch (err) {
       console.error(err);
-      const errMsg = err.response?.data || err.message || 'An error occurred while adding the repository. Ensure it is public and valid.';
+      const isNetworkError = !err.response;
+      const errMsg = isNetworkError
+        ? `Cannot reach the API at ${API_BASE_URL}. If this is a deployed app, set VITE_API_BASE_URL in Vercel to your Render API URL (for example, https://your-api.onrender.com/api).`
+        : (err.response?.data || err.message || 'An error occurred while adding the repository. Ensure it is public and valid.');
       setError(typeof errMsg === 'object' ? JSON.stringify(errMsg) : errMsg);
     } finally {
       setLoading(false);

@@ -125,3 +125,14 @@ OpenAPI document is exposed by the API at runtime via the mapped OpenAPI route.
 - Database migrations are applied automatically on API startup.
 - If AI requests hit provider limits, the API may return HTTP 429 for review generation.
 - Do not commit real API keys. Keep secrets in local config or environment variables.
+
+## Deployment
+
+When deploying the frontend to Vercel and the API/database to Render and Neon, set these environment variables:
+
+- Vercel frontend: `VITE_API_BASE_URL=https://<your-render-api>.onrender.com/api`
+- Render API: `ConnectionStrings__DefaultConnection=<your Neon PostgreSQL connection string>`
+- Render API: `OpenRouterSettings__ApiKey=<your OpenRouter key>`
+- Optional Render API: `GitHub__Token=<your GitHub token>`
+
+If the frontend cannot reach the API, it will now show the configured base URL in the error message so you can confirm the deployment target quickly.
